@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import BingMap from './BingMap'
+import config from './config'
 
 function App() {
   return (
@@ -7,6 +9,9 @@ function App() {
       <header className="App-header">
           tactileterrain
       </header>
+      <BingMap
+            config={config}
+          />
     </div>
   );
 }
