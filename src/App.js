@@ -29,13 +29,13 @@ function App() {
     // iconProps: { iconName: 'ArrowUpRight' },
     subMenuProps: {
       items: [
-        { key: 'a', text: 'Fire', onClick: () => {
-          setAtmosP(0)
-        }},
+        // { key: 'a', text: 'Fire', onClick: () => {
+        //   setAtmosP(0)
+        // }},
         { key: 'b', text: 'Cloud A', onClick: () => (setAtmosP(0)) },
         { key: 'c', text: 'Cloud B', onClick: () => (setAtmosP(1)) },
         { key: 'd', text: 'Cloud C', onClick: () => (setAtmosP(2)) },
-        { key: 'e', text: 'Traffic' }
+        // { key: 'e', text: 'Traffic' }
       ],
     }
   }

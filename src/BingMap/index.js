@@ -96,7 +96,7 @@ ${tile.zoom}/${tile.y}/${tile.x}.png`
   });
     var layer = new window.Microsoft.Maps.TileLayer({
       mercator: atmosphereTileSource,
-      opacity: 1.0
+      opacity: 0.75
     });
     map.layers.insert(layer);    
   }
