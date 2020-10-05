@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CommandBar,
   initializeIcons
@@ -8,20 +8,6 @@ import './App.css';
 import BingMap from './BingMap'
 import config from './config'
 
-const items = [
-  {
-  key: 'c',
-  text: 'Layer',
-  // iconProps: { iconName: 'ArrowUpRight' },
-  subMenuProps: {
-    items: [
-      { key: 'seattle', text: 'Fire' },
-      { key: 'los-angeles', text: 'Cloud' },
-      { key: 'miami', text: 'Traffic' }
-    ],
-  }
-}
-]
 const items2 = [
   {
     key: 'zoom-in-leaflet',
@@ -34,10 +20,31 @@ const items2 = [
 initializeIcons()
 
 function App() {
+  const [atmosP, setAtmosP] = useState(0)
+
+  const items = [
+    {
+    key: 'c',
+    text: 'Layer',
+    // iconProps: { iconName: 'ArrowUpRight' },
+    subMenuProps: {
+      items: [
+        { key: 'a', text: 'Fire', onClick: () => {
+          setAtmosP(0)
+        }},
+        { key: 'b', text: 'Cloud A', onClick: () => (setAtmosP(0)) },
+        { key: 'c', text: 'Cloud B', onClick: () => (setAtmosP(1)) },
+        { key: 'd', text: 'Cloud C', onClick: () => (setAtmosP(2)) },
+        { key: 'e', text: 'Traffic' }
+      ],
+    }
+  }
+  ]  
+
   return (
     <div className="App">
       <header className="App-header">
-          tactileterrain
+          tactileterrain 
           <CommandBar
             className="command-bar"
             items={items}
@@ -51,6 +58,7 @@ function App() {
       </header>
       <BingMap
             config={config}
+            atmosP={atmosP}
           />
     </div>
   );

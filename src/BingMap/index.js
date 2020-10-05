@@ -5,8 +5,29 @@ import './bingmap.css'
 let map
 let url
 const seattle = [47.6062, -122.3321];
-const BingMap = ({
+const pr = {
+      'temp': 'AIRS_L2_Temperature_500hPa_Day',
+      'particulate': 'Particulate_Matter_Below_2.5micrometers_2010-2012',
+      'rain': 'A2_RainOcn_NRT',
+      'wind': 'AMSR2_Wind_Speed_Day',
+      'albedo': 'MERRA2_Surface_Albedo_Monthly',
+      'elevation': 'ASTER_GDEM_Color_Index',
+      'soil_moisture': 'Aquarius_Soil_Moisture_Daily',
+      'pressure': 'MERRA2_Surface_Pressure_Monthly',
+      'population': 'GPW_Population_Density_2020'
+    }
+  // 'MODIS_Terra_CorrectedReflectance_TrueColor',
+  // 'VIIRS_Black_Marble',
+  const atmosphereProducts = [
+    'MODIS_Terra_Aerosol',
+    'OMI_Absorbing_Aerosol_Optical_Thickness_MW_388',
+    'MODIS_Terra_AOD_Deep_Blue_Land'
+  ]
+  const espgs = ['epsg4326', 'epsg3857']
+
+  const BingMap = ({
   config,
+  atmosP,
 }) => {
   url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   // eslint-disable-next-line
@@ -32,33 +53,14 @@ const BingMap = ({
       // disableZooming: true,
       // disablePanning: true
     })
-    const pr = {
-      'temp': 'AIRS_L2_Temperature_500hPa_Day',
-      'particulate': 'Particulate_Matter_Below_2.5micrometers_2010-2012',
-      'rain': 'A2_RainOcn_NRT',
-      'wind': 'AMSR2_Wind_Speed_Day',
-      'albedo': 'MERRA2_Surface_Albedo_Monthly',
-      'elevation': 'ASTER_GDEM_Color_Index',
-      'soil_moisture': 'Aquarius_Soil_Moisture_Daily',
-      'pressure': 'MERRA2_Surface_Pressure_Monthly',
-      'population': 'GPW_Population_Density_2020'
-    }
-    // 'MODIS_Terra_CorrectedReflectance_TrueColor',
-    // 'VIIRS_Black_Marble',
-    const atmosphereProducts = [
-      'MODIS_Terra_Aerosol',
-      'OMI_Absorbing_Aerosol_Optical_Thickness_MW_388',
-      'MODIS_Terra_AOD_Deep_Blue_Land'
-    ]
-    const espgs = ['epsg4326', 'epsg3857']
-    // tilematrix set invalid parameter
+
     var atmosphereTileSource = new window.Microsoft.Maps.TileSource({
       uriConstructor: tile => {
         return `https://gibs.earthdata.nasa.gov
 /wmts/
 ${espgs[1]}
 /best/
-${atmosphereProducts[2]}
+${atmosphereProducts[atmosP]}
 /default/2014-04-09/GoogleMapsCompatible_Level6/
 ${tile.zoom}/${tile.y}/${tile.x}
 .png`
@@ -103,7 +105,31 @@ ${tile.zoom}/${tile.y}/${tile.x}.png`
     node.src = url
     document.getElementById('bing-map').appendChild(node)
   }, [])
-
+  useEffect(() => {
+    if(map) {
+      var atmosphereTileSource = new window.Microsoft.Maps.TileSource({
+        uriConstructor: tile => {
+          return `https://gibs.earthdata.nasa.gov
+/wmts/
+${espgs[1]}
+/best/
+${atmosphereProducts[atmosP]}
+/default/2014-04-09/GoogleMapsCompatible_Level6/
+${tile.zoom}/${tile.y}/${tile.x}
+.png`
+        },
+        minZoom: 1,
+        maxZoom: 16,
+      });
+  
+      var layer = new window.Microsoft.Maps.TileLayer({
+        mercator: atmosphereTileSource,
+        opacity: 1.0
+      });
+      map.layers.clear()
+      map.layers.insert(layer);    
+    }
+  }, [atmosP])
   return (
     <div id="bing-map">&nbsp;</div>
   )
@@ -111,6 +137,7 @@ ${tile.zoom}/${tile.y}/${tile.x}.png`
 /* eslint-disable react/forbid-prop-types */
 BingMap.propTypes = {
   config: PropTypes.object.isRequired,
+  atmosP: PropTypes.number.isRequired,
 }
 
 export default BingMap
