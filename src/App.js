@@ -20,7 +20,7 @@ const items2 = [
 initializeIcons()
 
 function App() {
-  const [atmosP, setAtmosP] = useState(0)
+  const [atmosP, setAtmosP] = useState(null)
 
   const items = [
     {
@@ -32,10 +32,10 @@ function App() {
         // { key: 'a', text: 'Fire', onClick: () => {
         //   setAtmosP(0)
         // }},
-        { key: 'b', text: 'Cloud A', onClick: () => (setAtmosP(0)) },
-        { key: 'c', text: 'Cloud B', onClick: () => (setAtmosP(1)) },
-        { key: 'd', text: 'Cloud C', onClick: () => (setAtmosP(2)) },
-        // { key: 'e', text: 'Traffic' }
+        { key: 'a', text: 'A', onClick: () => (setAtmosP(0)) },
+        { key: 'b', text: 'B', onClick: () => (setAtmosP(1)) },
+        { key: 'c', text: 'C', onClick: () => (setAtmosP(2)) },
+        { key: 'd', text: 'D', onClick: () => (setAtmosP(3)) },
       ],
     }
   }

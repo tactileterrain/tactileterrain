@@ -21,7 +21,9 @@ const pr = {
   const atmosphereProducts = [
     'MODIS_Terra_Aerosol',
     'OMI_Absorbing_Aerosol_Optical_Thickness_MW_388',
-    'MODIS_Terra_AOD_Deep_Blue_Land'
+    'MODIS_Terra_AOD_Deep_Blue_Land',
+    'SMAP_L4_Emult_Average',
+    // 'MODIS_Terra_CorrectedReflectance_TrueColor'
   ]
   const espgs = ['epsg4326', 'epsg3857']
 
@@ -38,7 +40,7 @@ const pr = {
       center: new window.Microsoft.Maps.Location(...seattle),
       // eslint-disable-next-line
       mapTypeId: window.Microsoft.Maps.MapTypeId.aerial,
-      zoom: 2,
+      zoom: 6,
       showLocateMeButton: false,
       disableStreetside: true,
       disableBirdseye: true,
@@ -60,8 +62,8 @@ const pr = {
 /wmts/
 ${espgs[1]}
 /best/
-${atmosphereProducts[atmosP]}
-/default/2014-04-09/GoogleMapsCompatible_Level6/
+${atmosphereProducts[3]}
+/default/2015-04-13/GoogleMapsCompatible_Level6/
 ${tile.zoom}/${tile.y}/${tile.x}
 .png`
       },
@@ -95,7 +97,7 @@ ${tile.zoom}/${tile.y}/${tile.x}.png`
       bounds: window.Microsoft.Maps.LocationRect.fromEdges(35.176, -101.065, 14.01, -80.538)
   });
     var layer = new window.Microsoft.Maps.TileLayer({
-      mercator: atmosphereTileSource,
+      mercator: tileSource,
       opacity: 0.75
     });
     map.layers.insert(layer);    
@@ -114,7 +116,7 @@ ${tile.zoom}/${tile.y}/${tile.x}.png`
 ${espgs[1]}
 /best/
 ${atmosphereProducts[atmosP]}
-/default/2014-04-09/GoogleMapsCompatible_Level6/
+/default/2015-04-13/GoogleMapsCompatible_Level6/
 ${tile.zoom}/${tile.y}/${tile.x}
 .png`
         },
